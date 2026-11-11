@@ -1,0 +1,83 @@
+/* GOOD GIRL GRAPHICS — RLC / UTHERVERSE FULL-WIDTH LAYOUT TEST
+   Based on Rora's captured native 840px profile markup.
+   EXPERIMENTAL: verify on a test profile before using on a client.
+   Usage: link this stylesheet in About Me, then add the ggg-top root shown below.
+   Adjustable --ggg-top-space reserves vertical room for the custom header.
+*/
+:root {
+  --ggg-top-space: 430px;
+  --ggg-width: 820px;
+  --ggg-primary: #d75b9e;
+  --ggg-secondary: #35a9a5;
+  --ggg-accent: #a76acb;
+  --ggg-panel: #fff0f6;
+  --ggg-text: #382a39;
+}
+/* Anchor the absolute-positioned header to the real profile wrapper. */
+#MSCodesFixer { position:relative !important; overflow:visible !important; }
+/* The actual native inner table sits inside the outer cell. Push that whole
+   table down, leaving real room above the picture and Message Center. */
+#MSCodesFixer > tbody > tr > td > table:first-of-type {
+  margin-top:var(--ggg-top-space) !important;
+}
+/* The top content remains authored inside the real About Me field but is
+   positioned across the native 840px canvas rather than the 390px cell. */
+#ctl00_oCPH1_lblAboutMe #ggg-top,
+#ctl00_oCPH1_lblAboutMe #uv_static_top {
+  position:absolute !important;
+  top:10px !important;
+  left:10px !important;
+  width:var(--ggg-width) !important;
+  max-width:calc(100% - 20px) !important;
+  box-sizing:border-box !important;
+  z-index:2;
+  color:var(--ggg-text);
+}
+#ggg-top *, #uv_static_top * {box-sizing:border-box}
+#ggg-top img, #uv_static_top img {max-width:100%;height:auto}
+/* BabySweets' reusable panels */
+.ggg-welcome, .ggg-spotlight, .ggg-section,
+#uv_static_welcome, #uv_raffle_tickets {
+  background:var(--ggg-panel);
+  border:1px solid var(--ggg-primary);
+  color:var(--ggg-text);
+  padding:14px;
+  margin-bottom:12px;
+  box-sizing:border-box;
+}
+.ggg-nav, #uv_static_nav {
+  display:flex;flex-wrap:wrap;justify-content:center;gap:6px;
+  padding:10px;margin-bottom:12px;background:var(--ggg-panel);
+  border:1px solid var(--ggg-primary);
+}
+.ggg-nav a, #uv_static_nav a {
+  display:inline-block;padding:7px 12px;
+  background:linear-gradient(120deg,var(--ggg-primary),var(--ggg-accent));
+  color:white !important;text-decoration:none !important;border-radius:5px;
+}
+.ggg-spotlight-grid, .uv_spotlight_grid {
+  display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:8px;
+}
+.ggg-spotlight-card, .uv_spotlight_card {
+  padding:10px;border:1px solid var(--ggg-secondary);background:white;
+  color:var(--ggg-text) !important;text-decoration:none;
+}
+.ggg-spotlight-card strong,.uv_spotlight_card strong {display:block}
+/* Keep native photo, Message Center, ratings, action links and details in place. */
+#ctl00_oCPH1_imgPicture {border:2px solid var(--ggg-secondary) !important;box-sizing:border-box}
+#ctl00_oCPH1_tbDetailsSection > tr > td {vertical-align:top}
+/* Don't recolor the site-wide header, only the custom profile. */
+#MSCodesFixer div[style*="sec-header-bg-bk.gif"] {
+  background:linear-gradient(90deg,var(--ggg-primary),var(--ggg-accent)) !important;
+  color:white !important;
+}
+/* Utherverse's inline blue Clothing link in the site navigation. */
+#pnlNavLinks a[href*="/Clothing/"] {color:#333 !important;text-decoration:none}
+/* Native comments are not rebuilt or hidden. */
+#ctl00_oCPH1_tblPComments {max-width:100%;}
+#ctl00_oCPH1_tblPComments img {max-width:100%;height:auto}
+/* Optional client sections in Books: keep inside the native column for now.
+   Full-width Books requires its own verified row layout; don't overlap content. */
+#ctl00_oCPH1_lblBooks .ggg-section {max-width:100%;}
+/* Fixed-width platform; allow horizontal scrolling on narrow viewports instead
+   of squeezing native 390px columns into a broken mobile layout. */
